@@ -1,21 +1,20 @@
 // config/firebase.js
-import admin from 'firebase-admin';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import admin from "firebase-admin";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+let firebaseApp;
 
-// ✅ serviceAccountKey.json ফাইল আছে কি?
-const serviceAccount = JSON.parse(
-  fs.readFileSync(path.join(__dirname, './serviceAccountKey.json'), 'utf8')
-);
+try {
+  if (!admin.apps.length) {
+    const serviceAccount = JSON.parse(process.env.FIREBASE_KEY);
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
+    firebaseApp = admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
+    });
 
-console.log('✅ Firebase Admin initialized');
+    console.log("✅ Firebase Admin initialized");
+  }
+} catch (error) {
+  console.error("❌ Firebase error:", error.message);
+}
 
 export default admin;
