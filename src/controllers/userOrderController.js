@@ -1,7 +1,7 @@
 // backend/controllers/userOrderController.js
 import Order from "../models/Order.js";
 import Product from "../models/Product.js";
-import User from "../models/User.js";
+import User from "../models/user.js";
 import { createAndSendNotification } from './notificationController.js';
 
 // ================= CREATE ORDER =================
